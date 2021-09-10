@@ -13,5 +13,9 @@ fn main() {
         Ok(repo) => repo,
         Err(e) => panic!("failed to open: {}", e),
     };
-    println!("{:?}", repo.namespace());
+    let mut revwalker = repo.revwalk().expect("Unable to create Revwalker.");
+    revwalker.push_head().expect("Couldn't push head.");
+    for entry in revwalker {
+        println!("{:?}", entry);
+    }
 }
